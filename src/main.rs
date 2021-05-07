@@ -3,12 +3,12 @@ use std::io;
 use std::process;
 
 fn main() {
-    println!(
-        "Password Generator\n
-        - Press `enter` to use the default value\n
-        - Type `restart` to start over\n
-        - Type `exit` to quit"
-    );
+    // This was previously printed with just one `println!`
+    // macro but I divided it to improve legibility
+    println!("Password Generator");
+    println!("- Press `enter` to use the default value");
+    println!("- Type `restart` to start over");
+    println!("- Type `exit` to quit\n");
 
     // This loop has a `'label`, as this allows me to restart the
     // configuration at any time from within a nested loop
@@ -54,7 +54,7 @@ fn main() {
                     // default value is printed when this is the case
                     println!("32");
                     32
-                // As mentioned in line 9, "restart" is treated as a
+                // As mentioned in line 10, "restart" is treated as a
                 // command allowing the user to reset the config values
                 } else if len.trim() == "restart" {
                     // By using the outer-most loop's label, the whole
@@ -62,7 +62,7 @@ fn main() {
                     break 'main;
 
                 // "Exit" is also a recognized command, as mentioned in
-                // line 10, allowing users to easily quit the program if
+                // line 11, allowing users to easily quit the program if
                 // they are not familiat with `^C`
                 } else if len.trim() == "exit" {
                     // The process is terminated with a default error message
@@ -84,11 +84,11 @@ fn main() {
             io::stdin()
                 .read_line(&mut low)
                 .expect("Failed to read input!");
-            // As te input doesn't have to be parsed to an integer, the contents
-            // are checked directly
+            // As te input doesn't have to be parsed to an integer,
+            // the contents are checked directly
             let low: bool = match low.trim().to_lowercase().as_str() {
-                // As explained in line 105, the boolean value of `len` is
-                // determined by a "yes" or "no" input
+                // As explained in lines 112-114, the boolean value of `len`
+                // is determined by a "yes" or "no" input
                 "yes" | "y" | "" => {
                     // Similarly to the previous case, the default value is
                     // printed if nothing is inputed
@@ -109,13 +109,10 @@ fn main() {
                 }
 
                 _ => {
-                    println!(
-                        "\nPlease input one of the following arguments:\n
-                        - `Yes` or `Y`\n
-                        - `No` or `N`\n
-                        (not case-sensitive)"
-                    );
-
+                    println!("\nPlease input one of the following arguments:");
+                    println!("- `Yes` or `Y`");
+                    println!("- `No` or `N`");
+                    println!("(not case-sensitive)");
                     continue;
                 }
             };
@@ -150,7 +147,10 @@ fn main() {
                     }
 
                     _ => {
-                        println!("\nPlease input one of the following arguments:\n- `Yes` or `Y`\n- `No` or `N`\n(not case-sensitive)");
+                        println!("\nPlease input one of the following arguments:");
+                        println!("- `Yes` or `Y`");
+                        println!("- `No` or `N`");
+                        println!("(not case-sensitive)");
                         continue;
                     }
                 };
@@ -180,12 +180,10 @@ fn main() {
                         }
 
                         _ => {
-                            println!(
-                                "\nPlease input one of the following arguments:\n
-                                - `Yes` or `Y`\n
-                                - `No` or `N`\n
-                                (not case-sensitive)"
-                            );
+                            println!("\nPlease input one of the following arguments:");
+                            println!("- `Yes` or `Y`");
+                            println!("- `No` or `N`");
+                            println!("(not case-sensitive)");
                             continue;
                         }
                     };
@@ -217,12 +215,10 @@ fn main() {
                             }
 
                             _ => {
-                                println!(
-                                    "\nPlease input one of the following arguments:\n
-                                    - `Yes` or `Y`\n
-                                    - `No` or `N`\n
-                                    (not case-sensitive)"
-                                );
+                                println!("\nPlease input one of the following arguments:");
+                                println!("- `Yes` or `Y`");
+                                println!("- `No` or `N`");
+                                println!("(not case-sensitive)");
                                 continue;
                             }
                         };
@@ -285,12 +281,10 @@ fn main() {
                                 }
 
                                 _ => {
-                                    println!(
-                                        "\nPlease input one of the following arguments:\n
-                                        - `Yes` or `Y`\n
-                                        - `No` or `N`\n
-                                        (not case-sensitive)"
-                                    );
+                                    println!("\nPlease input one of the following arguments:");
+                                    println!("- `Yes` or `Y`");
+                                    println!("- `No` or `N`");
+                                    println!("(not case-sensitive)");
                                     continue;
                                 }
                             }
