@@ -31,7 +31,7 @@ fn main() {
                 // As it turns out, the only invalid integer is zero,
                 // since `len`'s `u32` type results in an error if
                 // the parsing of a negative number is attempted
-                if len /*>*/ == 0 {
+                if len /*>*/ != 0 {
                     len
                 } else {
                     // This error message was edited for the same reason
