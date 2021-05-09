@@ -175,8 +175,8 @@ fn config_u32(prompt: &str, default: u32) -> u32 {
         // [...]
         // Since in this case `match{}` doesn't return to a variable's
         // declaration, `parse()`'s target HAD to be explicitly stated by using
-        // "::<u32>", however I tested it again and the compiler seems to have
-        // stopped complaining...
+        // "::<u32>", however I tested it again and the compiler seems to be
+        // able to infer the type and has stopped complaining...
         match x.trim().parse/*::<u32>*/() {
             Ok(x) => {
                 if x != 0 {
