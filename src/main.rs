@@ -134,17 +134,15 @@ fn config_bool(prompt: &str, default: bool) -> bool {
             .expect("Failed to read input!");
         // [...]
         match x.trim().to_lowercase().as_str() {
-            "yes" | "y" | "" => {
-                if x.trim().is_empty() {
-                    println!("{}", default_text);
-                }
+            // The only significant difference with the previous `loop{}` is
+            // that the values are returned through `break`
+            "yes" | "y" => break true,
+            "no" | "n" => break false,
 
-                // The only significant difference with the previous `loop{}` is
-                // that the values are returned through `break`
+            "" => {
+                println!("{}", default_text);
                 break default;
             }
-
-            "no" | "n" => break false,
 
             "exit" => {
                 process::exit(1);
