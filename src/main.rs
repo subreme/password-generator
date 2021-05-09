@@ -205,10 +205,13 @@ fn config_u32(prompt: &str, default: u32) -> u32 {
 fn gen(length: u32, characters: &String) -> String {
     let mut password = String::new();
 
-    for _ in 0..(length + 1) {
+    for _ in 0..length {
         // By default, `.size()` returns a `usize` value, therefore we must tell
         // the compiler to interpret the value as a `u32` to match "1"
-        let i: u32 = rand::thread_rng().gen_range(1..(characters.len() as u32));
+
+        // Since `nth()` indexes starting from 0, the maximum value of `i`
+        // should be one less than the number of characters in `characters`
+        let i: u32 = rand::thread_rng().gen_range(0..((characters.len() - 1) as u32));
 
         // Here, the opposite is true, so `as` is used again
         password.push(characters.chars().nth(i as usize).unwrap());
