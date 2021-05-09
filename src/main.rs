@@ -8,26 +8,22 @@ fn main() {
     println!("- Type `exit` to quit\n");
 
     let len: u32 = config_u32("How many characters?", 32);
-    let low: bool = config_bool("Include lowercase letters?", true);
-    let upp: bool = config_bool("Include uppercase letters?", true);
-    let num: bool = config_bool("Include numbers?", true);
-    let spe: bool = config_bool("Include special characters?", true);
 
     let mut characters = String::new();
 
-    if low {
+    if config_bool("Include lowercase letters?", true) {
         characters.push_str("abcdefghijklmnopqrstuvwxyz");
     };
 
-    if upp {
+    if config_bool("Include uppercase letters?", true) {
         characters.push_str("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
     };
 
-    if num {
+    if config_bool("Include numbers?", true) {
         characters.push_str("1234567890");
     };
 
-    if spe {
+    if config_bool("Include special characters?", true) {
         characters.push_str("!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~");
     };
 
@@ -71,8 +67,9 @@ fn config_bool(prompt: &str, default: bool) -> bool {
         String::from("No")
     };
 
-    let result: bool = loop {
+    return loop {
         println!("\n{} (Default: `{}`)", prompt, default_text);
+
         let mut x = String::new();
         io::stdin()
             .read_line(&mut x)
@@ -101,12 +98,10 @@ fn config_bool(prompt: &str, default: bool) -> bool {
             }
         };
     };
-
-    result
 }
 
 fn config_u32(prompt: &str, default: u32) -> u32 {
-    let result: u32 = loop {
+    return loop {
         println!("\n{} (Default: `{}`)", prompt, default);
         let mut x = String::new();
 
@@ -116,7 +111,7 @@ fn config_u32(prompt: &str, default: u32) -> u32 {
         match x.trim().parse::<u32>() {
             Ok(x) => {
                 if x != 0 {
-                    x
+                    break x;
                 } else {
                     println!("\nValue cannot be zero!");
                     continue;
@@ -136,8 +131,6 @@ fn config_u32(prompt: &str, default: u32) -> u32 {
             }
         };
     };
-
-    result
 }
 
 fn gen(length: u32, characters: &String) -> String {
