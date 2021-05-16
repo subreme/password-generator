@@ -210,8 +210,11 @@ fn gen(length: u32, characters: &String) -> String {
         // the compiler to interpret the value as a `u32` to match "1"
 
         // Since `nth()` indexes starting from 0, the maximum value of `i`
-        // should be one less than the number of characters in `characters`
-        let i: u32 = rand::thread_rng().gen_range(0..((characters.len() - 1) as u32));
+        // should be one less than the number of characters in `characters`. I
+        // originally subtracted 1 from `characters.len()` to "fix" this,
+        // however its value is not included in the function's range, making
+        // that unnecessary.
+        let i: u32 = rand::thread_rng().gen_range(0..characters.len() as u32);
 
         // Here, the opposite is true, so `as` is used again
         password.push(characters.chars().nth(i as usize).unwrap());
