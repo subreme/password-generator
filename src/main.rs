@@ -145,7 +145,7 @@ fn config_bool(prompt: &str, default: bool) -> bool {
             }
 
             "exit" => {
-                process::exit(1);
+                process::exit(0);
             }
 
             _ => {
@@ -192,7 +192,7 @@ fn config_u32(prompt: &str, default: u32) -> u32 {
                     println!("{}", default);
                     break default;
                 } else if x.trim() == "exit" {
-                    process::exit(1)
+                    process::exit(0)
                 } else {
                     println!("Invalid input!");
                     continue;
