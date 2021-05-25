@@ -1,4 +1,4 @@
-use password_generator::{config, gen::gen, presets};
+use password_generator::{config, gen, presets};
 
 fn main() {
     println!("Password Generator");

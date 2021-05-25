@@ -1,10 +1,9 @@
 #[cfg(test)]
 mod tests {
     mod correct_length {
-        use crate::gen;
         #[test]
         fn custom() {
-            assert!(gen::gen(16, &String::from("abc")).len() == 16);
+            assert!(crate::gen(16, &String::from("abc")).len() == 16);
         }
     }
 }
@@ -137,14 +136,12 @@ mod characters {
     }
 }
 
-pub mod gen {
-    use rand::Rng;
-    pub fn gen(length: u32, characters: &String) -> String {
-        let mut password = String::new();
-        for _ in 0..length {
-            let i: u32 = rand::thread_rng().gen_range(0..characters.len() as u32);
-            password.push(characters.chars().nth(i as usize).unwrap());
-        }
-        password
+use rand::{thread_rng, Rng};
+pub fn gen(length: u32, characters: &String) -> String {
+    let mut password = String::new();
+    for _ in 0..length {
+        let i: u32 = thread_rng().gen_range(0..characters.len() as u32);
+        password.push(characters.chars().nth(i as usize).unwrap());
     }
+    password
 }
