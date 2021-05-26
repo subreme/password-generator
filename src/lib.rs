@@ -1,9 +1,16 @@
 #[cfg(test)]
 mod tests {
     mod correct_length {
+        use rand::{thread_rng, Rng};
         #[test]
         fn custom() {
-            assert!(crate::gen(16, &String::from("abc")).len() == 16);
+            let expected: usize = thread_rng().gen_range(1..100);
+            let actual: usize = crate::gen(expected as u32, &String::from("abc")).len();
+            assert_eq!(
+                expected, actual,
+                "`gen()` didn't produce a password of the correct length: expected {}, got {}",
+                expected, actual
+            );
         }
     }
 }
