@@ -1,0 +1,80 @@
+name: Build
+
+on: 
+  release:
+    types:
+      - created
+
+jobs:
+  build_for_win:
+    name: Windows
+    runs-on: windows-2019
+    steps:
+      - name: Checkout
+      - uses: actions/checkout@master
+
+      - name: Build
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release
+
+      - name: Rename Binary
+        run: mv target/release/password-generator password-generator-win
+
+      - name: Upload To Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl \
+            -f \
+            -sSL \
+            -XPOST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Length: $(stat -f%z password-generator-win)" \
+            -H "Content-Type: application/octet-stream" \
+            --upload-file "password-generator-win" \
+            "https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets?name=password-generator-win"
+
+  build_for_mac:
+    name: MacOS
+    runs-on: macos-11
+    steps:
+      - name: Checkout Code
+      - uses: actions/checkout@master
+
+      - name: Install Toolchain
+      - uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          default: true
+          override: true
+
+      - name: Add Target
+      - uses: actions-rs/toolchain@v1
+        with:
+          command: target add
+          args: aarch64-apple-darwin
+
+      - name: Build Project
+      - uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --release --target=aarch64-apple-darwin
+
+      - name: Rename Binary
+        run: mv target/release/password-generator password-generator-mac
+
+      - name: Upload To Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl \
+            -f \
+            -sSL \
+            -XPOST \
+            -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Content-Length: $(stat -f%z password-generator-mac)" \
+            -H "Content-Type: application/octet-stream" \
+            --upload-file "password-generator-mac" \
+            "https://uploads.github.com/repos/$GITHUB_REPOSITORY/releases/$(jq --raw-output '.release.id' $GITHUB_EVENT_PATH)/assets?name=password-generator-mac"
