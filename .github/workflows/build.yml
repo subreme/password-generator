@@ -2,8 +2,8 @@ name: Build
 
 on: 
   release:
-    types:
-      - published
+    types: # This configuration does not affect the page_build event above
+      - created
 
 jobs:
   build_for_win:
@@ -43,24 +43,11 @@ jobs:
       - name: Checkout Code
       - uses: actions/checkout@master
 
-      - name: Install Toolchain
-      - uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          default: true
-          override: true
-
-      - name: Add Target
-      - uses: actions-rs/toolchain@v1
-        with:
-          command: target add
-          args: aarch64-apple-darwin
-
       - name: Build Project
       - uses: actions-rs/cargo@v1
         with:
           command: build
-          args: --release --target=aarch64-apple-darwin
+          args: --release
 
       - name: Rename Binary
         run: mv target/release/password-generator password-generator-mac
