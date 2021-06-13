@@ -2,8 +2,7 @@ name: Build
 
 on: 
   release:
-    types: # This configuration does not affect the page_build event above
-      - created
+    types: [published]
 
 jobs:
   build_for_win:
