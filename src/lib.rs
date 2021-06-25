@@ -19,7 +19,7 @@ pub mod presets {
     use super::{characters, config};
     use std::io;
     use std::process;
-    pub fn default<'a>() -> (u32, String) {
+    pub fn default() -> (u32, String) {
         println!("Select a default preset:");
         let mut input = String::new();
         loop {
@@ -41,7 +41,7 @@ pub mod presets {
             }
         }
     }
-    pub fn custom<'a>() -> (u32, String) {
+    pub fn custom() -> (u32, String) {
         let len: u32 = config::u32("How many characters?", 32);
         let mut characters = String::new();
         if config::bool("Include lowercase letters?", true) {
@@ -126,25 +126,25 @@ pub mod config {
 }
 
 mod characters {
-    pub fn all<'a>() -> String {
+    pub fn all() -> String {
         String::from("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~")
     }
-    pub fn low<'a>() -> String {
+    pub fn low() -> String {
         String::from("abcdefghijklmnopqrstuvwxyz")
     }
-    pub fn upp<'a>() -> String {
+    pub fn upp() -> String {
         String::from("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     }
-    pub fn num<'a>() -> String {
+    pub fn num() -> String {
         String::from("1234567890")
     }
-    pub fn spe<'a>() -> String {
+    pub fn spe() -> String {
         String::from("!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~")
     }
 }
 
 use rand::{thread_rng, Rng};
-pub fn gen(length: u32, characters: &String) -> String {
+pub fn gen(length: u32, characters: &str) -> String {
     let mut password = String::new();
     for _ in 0..length {
         let i: u32 = thread_rng().gen_range(0..characters.len() as u32);
